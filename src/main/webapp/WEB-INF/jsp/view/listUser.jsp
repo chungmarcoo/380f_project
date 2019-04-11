@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>COMPS380F Bidding</title>
+        <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <style>body{font-family: 'Roboto', sans-serif;}</style>
     </head>
@@ -46,7 +46,7 @@
                                 [<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]
                             </td>
                             <td>
-                                [<a href="<c:url value="/user/edit/${user.username}" />">edit</a>]
+                                [<a href="<c:url value="/user/edit/${user.username}" />">Edit</a>]
                             </td>
                         </tr>
                     </c:forEach>
