@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>COMPS380F Bidding</title>
+        <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <style>body{font-family: 'Roboto', sans-serif;}</style>
     </head>
@@ -12,7 +12,7 @@
         <c:if test="${param.logout != null}">
             <p>You have logged out.</p>
         </c:if>
-        <h2>COMPS380F Bidding Login</h2>
+        <h2>COMPS380F Course Login</h2>
         <form action="login" method="POST">
             <label for="username">Username:</label><br/>
             <input type="text" id="username" name="username" /><br/><br/>

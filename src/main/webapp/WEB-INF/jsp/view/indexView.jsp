@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>COMPS380F Bidding</title>
+        <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <style>body{font-family: 'Roboto', sans-serif;}</style>
+        <style>
+        body{font-family: 'Roboto', sans-serif;}
+        a{text-decoration: none; color: black;}
+        </style>
     </head>
     <body>
-        <a href="<c:url value="/user/register" />">Register</a><br /><br />
-        <a href="<c:url value="/login" />">Login</a><br /><br />
-        <br />
-        <a href="<c:url value="/" />">Return to front page</a>
+        <button><a href="<c:url value="/user/register" />">Register</a></button>
+        <button><a href="<c:url value="/login" />">Login</a></button>
         <br /><br />
-        <h2>Bidding #${itemId}: <c:out value="${item.subject}" /></h2>
+        <button><a href="<c:url value="/" />">Return to front page</a></button>
         <br /><br />
-        <i>Item Owner - <c:out value="${item.customerName}" /></i><br /><br />
-        <i>Expected Price - <c:out value="${item.expectedPrice}" /></i><br /><br />
-        <i>Status - <c:out value="${item.status}" /></i><br /><br />
-        <i>Current number of bids - <c:out value="${item.noOfBids}" /></i><br /><br />
-        <i>Description - <c:out value="${item.description}" /></i><br /><br />
+        <h2>Course #${itemId}</h2>
+        
+        <p><b>Lecture Title:</b> <c:out value="${item.subject}" /></p>
+        <p><b>Lecturer:</b> <c:out value="${item.customerName}" /></p>
         <c:if test="${item.numberOfAttachments > 0}">
-            Images:<br /><br />
+            <b>Lecture Notes / Tutorial Notes:</b>
             <c:forEach items="${item.attachments}" var="attachment" varStatus="status">
-                    <img src="<c:url value="/${itemId}/attachment/${attachment.name}"/> " height="180px" hspace="20">
+                <a href="<c:url value="/item/${itemId}/attachment/${attachment.name}"/>">Notes Link</a>
             </c:forEach><br /><br />
         </c:if>
-        <c:if test="${item.status=='end'}">       
-            <c:choose>
-                <c:when test="${item.winnerName eq 'No Winner'}">
-                    No Winner.
-                </c:when>
-                <c:otherwise>Winner: <c:out value="${item.winnerName}"/>&nbsp;(Price:&nbsp;<c:out value="${item.winnerPrice}"/>)</c:otherwise>
-            </c:choose> 
-        </c:if>
+            
+            <c:if test="${item.getComments().size() > 0}">
+                Comments:<br/>
+                <c:forEach items="${item.comments}" var="comment" varStatus="status">
+                    <hr />
+                    <i><c:out value="${comment.name}"/> (User): 
+                            <c:out value="${comment.getContent()}"/>
+                        <hr />
+                    </c:forEach>
+                </c:if>
     </body>
 </html>
