@@ -146,9 +146,7 @@ public class ItemController {
 
         public void setWinnerName(String winnerName) {
             this.winnerName = winnerName;
-        }
-        
-        
+        }   
 
     }
 

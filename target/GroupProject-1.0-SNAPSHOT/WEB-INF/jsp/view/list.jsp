@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!--<title>COMPS380F Bidding</title>-->
-        <title>COMPS380F Online Course</title>
+        <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <style>body{font-family: 'Roboto', sans-serif;}</style>
+        <style>body{font-family: 'Roboto', sans-serif;}
+        button > a {text-decoration: none; color: black;}</style>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
@@ -13,13 +13,13 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <!--<h2>Bidding Items</h2>-->
         <h2>Lecture(s)</h2>
         <security:authorize access="hasRole('ADMIN')">
-            <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
+            <button><a href="<c:url value="/user" />">Manage User Accounts</a></button>
         </security:authorize>
-<!--        <a href="<c:url value="/item/create" />">Create an Item</a><br /><br />-->
-            <a href="<c:url value="/item/create" />">Create a Course</a><br /><br />
+            <button><a href="<c:url value="/item/create" />">Create a Course</a></button>
+        
+        <br><hr><br>
 
         <c:choose>
             <c:when test="${fn:length(itemDatabase) == 0}">
@@ -32,12 +32,12 @@
                         <c:out value="${entry.value.subject}" /></a>
                     
                     <security:authorize access="hasRole('ADMIN') or principal.username=='${entry.value.customerName}'">
-                        [<a href="<c:url value="/item/edit/${entry.key}" />">Edit</a>]
+                        <button><a href="<c:url value="/item/edit/${entry.key}" />">Edit</a></button>
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN') or principal.username=='${entry.value.customerName}'">
-                        [<a href="<c:url value="/item/delete/${entry.key}" />">Delete</a>]
+                        <button><a href="<c:url value="/item/delete/${entry.key}" />">Delete</a></button>
                     </security:authorize>
-                    <br />
+                    <br /><br />
                 </c:forEach>
             </c:otherwise>
         </c:choose>

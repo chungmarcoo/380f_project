@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>COMPS380F Bidding</title>
+        <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <style>body{font-family: 'Roboto', sans-serif;}</style>
     </head>
@@ -12,7 +12,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Bidding Item #${itemId}</h2>
+        <h2>Lecture #${itemId} ${item.subject}</h2>
         <form:form method="POST" enctype="multipart/form-data" modelAttribute="itemForm">
             <form:label path="subject">Product Name</form:label><br/>
             <form:input type="text" path="subject" /><br/><br/>

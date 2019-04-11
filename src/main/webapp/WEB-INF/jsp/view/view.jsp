@@ -3,7 +3,8 @@
     <head>
         <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <style>body{font-family: 'Roboto', sans-serif;}</style>
+        <style>body{font-family: 'Roboto', sans-serif;}
+        button > a {text-decoration: none; color: black;}</style>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
@@ -12,28 +13,30 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <br />
-        <a href="<c:url value="/item" />">Return to course list</a>
+        <a href="<c:url value="/item" />">Return to lecture(s) list</a>
         <br /><br />
-        <h2>Course #${itemId}</h2>
+        <h2>Lecture #${itemId}</h2>
         <security:authorize access="hasRole('ADMIN') or principal.username=='${item.customerName}'">
-            [<a href="<c:url value="/item/edit/${itemId}" />">Edit</a>]
-            [<a href="<c:url value="/item/delete/${itemId}" />">Delete</a>]
+            <button><a href="<c:url value="/item/edit/${itemId}" />">Edit</a></button>
+            <button><a href="<c:url value="/item/delete/${itemId}" />">Delete</a></button>
         </security:authorize>
-        <br /><br />
+        <br />
 
         <p><b>Lecture Title:</b> <c:out value="${item.subject}" /></p>
         <p><b>Lecturer:</b> <c:out value="${item.customerName}" /></p>
 
         <c:if test="${item.numberOfAttachments > 0}">
             <b>Lecture Notes / Tutorial Notes:</b>
+            <ol>
             <c:forEach items="${item.attachments}" var="attachment" varStatus="status">
-                <a href="<c:url value="/item/${itemId}/attachment/${attachment.name}"/>">Notes Link</a>
-            </c:forEach><br /><br />
+                <li><a href="<c:url value="/item/${itemId}/attachment/${attachment.name}"/>">${attachment.name}</a></li>
+            </c:forEach>
+            </ol>
         </c:if>
         <security:authorize access="hasRole('ADMIN') or hasRole('USER')">
             <form:form method="POST" enctype="multipart/form-data" modelAttribute="commentForm">
-                <form:label path="comment">Write a comment</form:label><br/>
-                <form:input type="text" path="comment" /><br/><br/>
+                <form:label path="comment"><b>Write a comment</b></form:label><br/>
+                <form:textarea type="text" path="comment" rows="5" cols="30" /><br/><br/>
                 <input type="hidden" name="hidden" value="comment" />
                 <input type="submit" value="Add comment"/><br/><br/>
             </form:form>
@@ -43,7 +46,7 @@
                     <hr />
                     <i><c:out value="${comment.name}"/> (User): 
                             <c:out value="${comment.getContent()}"/>                     <security:authorize access="hasRole('ADMIN')">
-                                [<a href="<c:url value="/item/${itemId}/deleteComment" />">Delete</a>]
+                                &nbsp;<button><a href="<c:url value="/item/${itemId}/deleteComment" />">Delete</a></button>
                             </security:authorize>
                         <hr />
                     </c:forEach>

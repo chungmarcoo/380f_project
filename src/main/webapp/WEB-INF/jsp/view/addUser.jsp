@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>COMPS380F Bidding</title>
+        <title>COMPS380F Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <style>body{font-family: 'Roboto', sans-serif;}</style>
     </head>
