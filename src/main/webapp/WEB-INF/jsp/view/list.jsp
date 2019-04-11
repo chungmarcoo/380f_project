@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>COMPS380F Bidding</title>
+        <!--<title>COMPS380F Bidding</title>-->
+        <title>COMPS380F Online Course</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <style>body{font-family: 'Roboto', sans-serif;}</style>
     </head>
@@ -12,11 +13,13 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Bidding Items</h2>
+        <!--<h2>Bidding Items</h2>-->
+        <h2>Course(s)</h2>
         <security:authorize access="hasRole('ADMIN')">
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
-        <a href="<c:url value="/item/create" />">Create an Item</a><br /><br />
+<!--        <a href="<c:url value="/item/create" />">Create an Item</a><br /><br />-->
+            <a href="<c:url value="/item/create" />">Create a Course</a><br /><br />
 
         <c:choose>
             <c:when test="${fn:length(itemDatabase) == 0}">

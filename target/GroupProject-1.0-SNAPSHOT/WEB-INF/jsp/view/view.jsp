@@ -12,9 +12,9 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <br />
-        <a href="<c:url value="/item" />">Return to list items</a>
+        <a href="<c:url value="/item" />">Return to course list</a>
         <br /><br />
-        <h2>Bidding #${itemId}: <c:out value="${item.subject}" /></h2>
+        <h2>Course #${itemId}</h2>
         <security:authorize access="hasRole('ADMIN') or principal.username=='${item.customerName}'">
             [<a href="<c:url value="/item/edit/${itemId}" />">Edit</a>]
             [<a href="<c:url value="/item/delete/${itemId}" />">Delete</a>]
@@ -37,15 +37,18 @@
             </c:choose>
         </security:authorize>
         <br /><br />
-        <i>Item Owner - <c:out value="${item.customerName}" /></i><br /><br />
-        <i>Expected Price - <c:out value="${item.expectedPrice}" /></i><br /><br />
-        <i>Status - <c:out value="${item.status}" /></i><br /><br />
-        <i>Current number of bids - <c:out value="${item.noOfBids}" /></i><br /><br />
-        <i>Description - <c:out value="${item.description}" /></i><br /><br />
+<!--        <i>Item Owner - <c:out value="${item.customerName}" /></i><br /><br />-->
+        <p><b>Lecture Title:</b> <c:out value="${item.subject}" /></p>
+        <p><b>Lecturer:</b> <c:out value="${item.customerName}" /></p>
+<!--        <i>Expected Price - <c:out value="${item.expectedPrice}" /></i><br /><br />
+        <i>Status - <c:out value="${item.status}" /></i><br /><br />-->
+        <!--<i>Current number of bids - <c:out value="${item.noOfBids}" /></i><br /><br />-->
+        <!--<i>Description - <c:out value="${item.description}" /></i><br /><br />-->
         <c:if test="${item.numberOfAttachments > 0}">
-            Images:<br /><br />
+            <b>Lecture Notes / Tutorial Notes:</b>
             <c:forEach items="${item.attachments}" var="attachment" varStatus="status">
-                    <img src="<c:url value="/item/${itemId}/attachment/${attachment.name}"/> " height="180px" hspace="20">
+<!-- <img src="<c:url value="/item/${itemId}/attachment/${attachment.name}"/> " height="180px" hspace="20">-->
+                    <a href="<c:url value="/item/${itemId}/attachment/${attachment.name}"/>">Notes Link</a>
             </c:forEach><br /><br />
         </c:if>
         <security:authorize access="hasRole('ADMIN') or hasRole('USER')">
