@@ -9,11 +9,11 @@
     <body>
             <a href="<c:url value="/user/register" />">Register</a><br /><br />
             <a href="<c:url value="/login" />">Login</a><br /><br />
-        <h2>Bidding Items</h2>
+        <h2>Course List</h2>
 
         <c:choose>
             <c:when test="${fn:length(ItemController.itemDatabase)<=0}">
-                <i>There are no items in the system.</i>
+                <i>There are no course in the system.</i>
             </c:when>
             <c:otherwise>
                 <c:forEach items="${ItemController.itemDatabase}" var="entry">
