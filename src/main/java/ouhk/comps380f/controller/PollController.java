@@ -130,6 +130,8 @@ public class PollController {
     @RequestMapping(value = "/poll/{poll_id}", method = RequestMethod.GET)
     public ModelAndView createAnsForm(@PathVariable("poll_id") long poll_id,ModelMap model) {
         //model.addAttribute("pollDatabase", pollService.getPoll(poll_id));
+        Poll poll = pollService.getPoll(poll_id);
+        model.addAttribute("poll",poll);
         return new ModelAndView("viewPoll", "ansPollForm", new ansPollForm());
     }
 

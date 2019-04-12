@@ -12,24 +12,15 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <c:choose>
-            <c:when test="${fn:length(pollDatabase) == 0}">
-                <i>null in pollDatabase</i>
-            </c:when>
-            <c:otherwise>
-                <c:forEach items="${pollDatabase}" var="poll">
-                    <h2>Question #${poll.poll_id}:${poll.question}</h2>
-                    <form:form method="POST" modelAttribute="ansPollForm">
-                        <form:radiobutton path="response" value="${poll.response1}">${poll.response1}</form:label><br>
-                            <form:radiobutton path="response" value="${poll.response2}">${poll.response2}</form:label><br>
-                                <form:radiobutton path="response" value="${poll.response3}">${poll.response3}</form:label><br>
-                                    <form:radiobutton path="response" value="${poll.response4}">${poll.response4}</form:label><br>
-                                        <input type="submit" value="Submit"/>
-                                        </form:form>
-                                        </c:forEach>
-                                        </c:otherwise>
-                                        </c:choose>
+                <h2>Question #${poll.poll_id}:${poll.question}</h2>
+                <ul>
+                    <li>${poll.response1}</li>
+                    <li>${poll.response2}</li>
+                    <li>${poll.response3}</li>
+                    <li>${poll.response4}</li>
+                </ul>
 
 
-                                    </body>
-                                </html>
+
+    </body>
+</html>

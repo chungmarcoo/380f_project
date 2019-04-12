@@ -19,11 +19,11 @@ public class PollServiceImpl implements PollService {
         return pollRepo.findAll();
     }
 
-    /*@Override
+    @Override
     @Transactional
-    public List<Poll> getPoll(long poll_id) {
-        return pollRepo.findAllByPollId(poll_id);
-    }*/
+    public Poll getPoll(long poll_id) {
+        return pollRepo.findOne(poll_id);
+    }
 
     /*@Override
     @Transactional(rollbackFor = CommentNotFound.class)
