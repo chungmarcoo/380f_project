@@ -18,6 +18,7 @@
             <button><a href="<c:url value="/user" />">Manage User Accounts</a></button>
         </security:authorize>
             <button><a href="<c:url value="/item/create" />">Create a Course</a></button>
+            <button><a href="<c:url value="/item/createPoll" />">Create a Poll</a></button>
         
         <br><hr><br>
 
@@ -38,6 +39,21 @@
                         <button><a href="<c:url value="/item/delete/${entry.key}" />">Delete</a></button>
                     </security:authorize>
                     <br /><br />
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+                    
+            <h2>Poll(s)</h2>
+
+        <c:choose>
+            <c:when test="${fn:length(pollDatabase) == 0}">
+                <i>There are no polls in the system.</i>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${pollDatabase}" var="entry">
+                    Poll ${entry.key}:
+                    <a href="<c:url value="/item/viewPoll/${entry.key}" />">
+                        <c:out value="${entry.value.pollTitle}" /></a>
                 </c:forEach>
             </c:otherwise>
         </c:choose>

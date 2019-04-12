@@ -20,13 +20,16 @@ import ouhk.comps380f.model.Item;
 import ouhk.comps380f.view.DownloadingView;
 import ouhk.comps380f.model.BidPrice;
 import ouhk.comps380f.model.Comment;
+import ouhk.comps380f.model.Poll;
 
 @Controller
 @RequestMapping("item")
 public class ItemController {
 
     private volatile long ITEM_ID_SEQUENCE = 1;
+    private volatile long POLL_ID_SEQUENCE = 1;
     public static Map<Long, Item> itemDatabase = new Hashtable<>();
+    public static Map<Long,Poll> pollDatabase = new Hashtable<>();
     private Map<String,BidPrice> biddingPriceForm = new Hashtable<>();
     private Map<String,Comment> commentForm = new Hashtable<>();
     private Map<String,BidPrice> bidderWinnerForm = new Hashtable<>();
@@ -35,6 +38,7 @@ public class ItemController {
     @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String list(ModelMap model) {
         model.addAttribute("itemDatabase", itemDatabase);
+        model.addAttribute("pollDatabase", pollDatabase);
         return "list";
     }
 
@@ -42,6 +46,10 @@ public class ItemController {
     public ModelAndView create() {
         return new ModelAndView("add", "itemForm", new Form());
     }
+    @RequestMapping(value = "createPoll", method = RequestMethod.GET)
+    public ModelAndView createPoll() {
+        return new ModelAndView("addPoll", "pollForm", new Form());
+    }    
     
     @RequestMapping(value = "view/{itemId}", method = RequestMethod.GET)
     public ModelAndView view(@PathVariable("itemId") long itemId, ModelMap model, Principal principal) {
@@ -75,6 +83,51 @@ public class ItemController {
         private String bidPrice;
         private String comment;
         private String winnerName;
+
+        public String getPollTitle() {
+            return pollTitle;
+        }
+
+        public void setPollTitle(String pollTitle) {
+            this.pollTitle = pollTitle;
+        }
+
+        public String getOptionA() {
+            return optionA;
+        }
+
+        public void setOptionA(String optionA) {
+            this.optionA = optionA;
+        }
+
+        public String getOptionB() {
+            return optionB;
+        }
+
+        public void setOptionB(String optionB) {
+            this.optionB = optionB;
+        }
+
+        public String getOptionC() {
+            return optionC;
+        }
+
+        public void setOptionC(String optionC) {
+            this.optionC = optionC;
+        }
+
+        public String getOptionD() {
+            return optionD;
+        }
+
+        public void setOptionD(String optionD) {
+            this.optionD = optionD;
+        }
+        private String pollTitle;
+        private String optionA;
+        private String optionB;
+        private String optionC;
+        private String optionD;
 
         public String getSubject() {
             return subject;
@@ -181,6 +234,35 @@ public class ItemController {
         return this.ITEM_ID_SEQUENCE++;
     }
     
+    @RequestMapping(value = "createPoll", method = RequestMethod.POST)
+    public View createPoll(Form form) throws IOException {
+        Poll item = new Poll();
+        item.setId(this.getNextPollId());
+        item.setPollTitle(form.getPollTitle());
+        item.setOptionA(form.getOptionA());
+        item.setOptionB(form.getOptionB());
+        item.setOptionC(form.getOptionC());
+        item.setOptionD(form.getOptionD());
+        
+        this.pollDatabase.put(item.getId(), item);
+        return new RedirectView("/item/viewPoll/" + item.getId(), true);
+    }
+    
+    private synchronized long getNextPollId() {
+        return this.POLL_ID_SEQUENCE++;
+    }
+    
+     @RequestMapping(value = "viewPoll/{pollId}", method = RequestMethod.GET)
+    public String view(@PathVariable("pollId") long pollId,
+            ModelMap model) {
+        Poll poll = this.pollDatabase.get(pollId);
+        if (poll == null) {
+            return "redirect:/poll/list";
+        }
+        model.addAttribute("pollId", Long.toString(pollId));
+        model.addAttribute("poll", poll);
+        return "viewPoll";
+    }
 
     @RequestMapping(value = "/{itemId}/attachment/{attachment:.+}", method = RequestMethod.GET)
     public View download(@PathVariable("itemId") long itemId,

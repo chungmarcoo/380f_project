@@ -28,5 +28,22 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
+                    
+                <h2>Poll(s)</h2>
+
+        <c:choose>
+            <c:when test="${fn:length(ItemController.pollDatabase)<=0}">
+                <i>There are no polls in the system.</i>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${ItemController.pollDatabase}" var="entry">
+                    Poll(s) ${entry.key}:
+                    <a href="<c:url value="/${entry.key}" />">
+                        <c:out value="${entry.value.pollTitle}" /></a>
+                    
+                    <br />
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </body>
 </html>
