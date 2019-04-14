@@ -2,6 +2,15 @@
 <html>
     <head>
         <title>Lecture</title>
+        <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, td, th {
+          border: 1px solid black;
+        }
+        </style>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
@@ -11,10 +20,10 @@
         </form>
 
         <h2>Lecture ${lecture.id}: <c:out value="${lecture.subject}" /></h2>
-        <security:authorize access="hasRole('ADMIN') or principal.username=='${lecture.customerName}'">            
+        <security:authorize access="hasRole('LECTURER') or principal.username=='${lecture.customerName}'">            
             [<a href="<c:url value="/lecture/edit/${lecture.id}" />">Edit</a>]
         </security:authorize>
-        <security:authorize access="hasRole('ADMIN')">            
+        <security:authorize access="hasRole('LECTURER')">            
             [<a href="<c:url value="/lecture/delete/${lecture.id}" />">Delete</a>]
         </security:authorize>
         <br /><br />
@@ -28,24 +37,25 @@
             </c:forEach><br /><br />
         </c:if>
 
-        <table border="1">
+        <table>
             <tr>
-                <th>User</th>
+<!--                <th>User</th>-->
                 <th>Comment</th>
             </tr>
 
             <c:choose>
                 <c:when test="${fn:length(commentDatabase) == 0}">
                     <tr>
-                        <td colspan="2"><i>There are no comments.</i></td>
+<!--                        <td colspan="2"><i>There are no comments.</i></td>-->
+                        <td><i>There are no comments.</i></td>
                     </tr>
                 </c:when>
                 <c:otherwise>
                     <c:forEach items="${commentDatabase}" var="entry">
                         <tr>
-                            <td><c:out value="${entry.username}" /></td>
-                            <td><c:out value="${entry.comment}" />
-                                <security:authorize access="hasRole('ADMIN') or principal.username=='${entry.username}'">
+<!--                            <td><c:out value="${entry.username}" /></td>-->
+                            <td>(<c:out value="${entry.username}" />):<c:out value="${entry.comment}" />
+                                <security:authorize access="hasRole('LECTURER') or principal.username=='${entry.username}'">
                                 [<a href="<c:url value="deleteComment/${lectureId}/${entry.id}" />">Delete</a>]
                             </security:authorize></td>
                         </tr>
@@ -55,7 +65,7 @@
 
         </table><br>
 
-        <a href="<c:url value="/lecture/${lectureId}/comment"/>">Leave Comment</a><br>
+        <a href="<c:url value="/lecture/${lectureId}/comment"/>">Add a Comment</a><br><br>
         <a href="<c:url value="/lecture" />">Return to list lectures</a>
     </body>
 </html>

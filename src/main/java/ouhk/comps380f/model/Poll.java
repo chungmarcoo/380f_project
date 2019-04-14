@@ -18,12 +18,13 @@ public class Poll implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long poll_id;
     
+    @Column(name = "question")
     private String question;
 
-    private String response1;
-    private String response2;
-    private String response3;
-    private String response4;
+    private String chooseoption1;
+    private String chooseoption2;
+    private String chooseoption3;
+    private String chooseoption4;
 
     public long getPoll_id() {
         return poll_id;
@@ -41,38 +42,35 @@ public class Poll implements Serializable {
         this.question = question;
     }
 
-    public String getResponse1() {
-        return response1;
+    public String getChooseOption1() {
+        return chooseoption1;
     }
 
-    public void setResponse1(String response1) {
-        this.response1 = response1;
+    public void setChooseOption1(String chooseoption1) {
+        this.chooseoption1 = chooseoption1;
     }
 
-    public String getResponse2() {
-        return response2;
+    public String getChooseOption2() {
+        return chooseoption2;
     }
 
-    public void setResponse2(String response2) {
-        this.response2 = response2;
+    public void setChooseOption2(String chooseoption2) {
+        this.chooseoption2 = chooseoption2;
     }
 
-    public String getResponse3() {
-        return response3;
+    public String getChooseOption3() {
+        return chooseoption3;
     }
 
-    public void setResponse3(String response3) {
-        this.response3 = response3;
+    public void setChooseOption3(String chooseoption3) {
+        this.chooseoption3 = chooseoption3;
     }
 
-    public String getResponse4() {
-        return response4;
+    public String getChooseOption4() {
+        return chooseoption4;
     }
 
-    public void setResponse4(String response4) {
-        this.response4 = response4;
+    public void setChooseOption4(String chooseoption4) {
+        this.chooseoption4 = chooseoption4;
     }
-    
-    
-
 }

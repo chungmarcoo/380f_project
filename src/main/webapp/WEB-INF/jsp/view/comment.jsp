@@ -14,7 +14,7 @@
     <body>
         <h1>Add a New Comment</h1>
         <form:form method="POST" modelAttribute="commentForm">
-            <form:label path="comment">Leave Comment</form:label>
+            <form:label path="comment">Comment</form:label>
             <form:input type="text" path="comment"/>
             <form:hidden path="username" value="${principal.username}"/>
             <form:hidden path="lecture_id" value="${lecture.id}"/>

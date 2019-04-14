@@ -28,16 +28,16 @@ public class LectureUserController {
 
     public static class Form {
 
-        private String username;
+        private String userName;
         private String password;
         private String[] roles;
 
         public String getUsername() {
-            return username;
+            return userName;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setUsername(String userName) {
+            this.userName = userName;
         }
 
         public String getPassword() {
@@ -71,9 +71,9 @@ public class LectureUserController {
         return new RedirectView("/user/list", true);
     }
 
-    @RequestMapping(value = "delete/{username}", method = RequestMethod.GET)
-    public View deleteLecture(@PathVariable("username") String username) {
-        lectureUserRepo.delete(lectureUserRepo.findOne(username));
+    @RequestMapping(value = "delete/{userName}", method = RequestMethod.GET)
+    public View deleteLecture(@PathVariable("userName") String userName) {
+        lectureUserRepo.delete(lectureUserRepo.findOne(userName));
         return new RedirectView("/user/list", true);
     }
 }

@@ -32,7 +32,7 @@ public class CommentController {
     public static class cmForm {
 
         private long id;
-        private String username;
+        private String userName;
         private String comment;
         private long lecture_id;
 
@@ -45,11 +45,11 @@ public class CommentController {
         }
 
         public String getUsername() {
-            return username;
+            return userName;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setUsername(String userName) {
+            this.userName = userName;
         }
 
         public String getComment() {

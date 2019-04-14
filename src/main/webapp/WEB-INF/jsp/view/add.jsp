@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <!--<link rel="stylesheet" href="/css/add.css">-->
         <title>Add a New Lecture</title>
         <style>
-            .files input {
+/*            .files input {
                 outline: 2px dashed #92b0b3;
                 outline-offset: -10px;
                 -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
@@ -53,7 +51,7 @@
                 font-weight: 600;
                 text-transform: capitalize;
                 text-align: center;
-            }
+            }*/
         </style>
     </head>
     <body>
@@ -63,24 +61,21 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h2>Create a Lecture</h2>
+        <h2>Add a Lecture</h2>
         <form:form method="POST" enctype="multipart/form-data" modelAttribute="lectureForm">
-            <form:label path="subject">Subject</form:label><br/>
+            <form:label path="subject">Course Subject</form:label><br/>
             <form:input type="text" path="subject" /><br/><br/>
             <b>Course Materials</b><br/>
-
-            <div class="container">
+<!--            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                            <div class="form-group files">
-                                <label>Upload Your File </label>
-                                <input type="file" name="attachments" multiple="multiple" class="form-control"/>
-                            </div>
+                        <div class="form-group files">-->
+                            <label>Upload Your File:(Drag)</label>
+                            <input type="file" name="attachments" multiple="multiple" class="form-control"/>
+<!--                        </div>
                     </div>
                 </div>
-            </div>
-
-
+            </div>-->
             <br/>
             <input type="submit" value="Submit"/>
         </form:form>

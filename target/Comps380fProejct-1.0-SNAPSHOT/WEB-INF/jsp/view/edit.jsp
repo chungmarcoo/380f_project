@@ -6,7 +6,7 @@
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <!--<link rel="stylesheet" href="/css/add.css">-->
         <title>Edit the Lecture</title>
-        <style>
+<!--        <style>
             .files input {
                 outline: 2px dashed #92b0b3;
                 outline-offset: -10px;
@@ -52,7 +52,7 @@
                 text-transform: capitalize;
                 text-align: center;
             }
-        </style>
+        </style>-->
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
@@ -79,17 +79,17 @@
                     </c:forEach>
                 </ul>
             </c:if>
-            <b>Lecture Materials</b><br />
-            <div class="container">
+            <b>Upload New Materials</b><br />
+<!--            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group files">
-                            <label>Upload Your File </label>
+                        <div class="form-group files">-->
+<!--                            <label>Upload Your File </label>-->
                             <input type="file" name="attachments" multiple="multiple" class="form-control"/>
-                        </div>
+<!--                        </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <input type="submit" value="Save"/><br/><br/>
         </form:form>
         <a href="<c:url value="/lecture" />">Return to list lectures</a>

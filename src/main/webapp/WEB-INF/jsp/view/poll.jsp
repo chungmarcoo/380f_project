@@ -12,7 +12,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <h1>Poll Page</h1>
-        <a href="<c:url value="/lecture/poll/list/addPoll" />">Add Poll</a><br /><br />
+        <security:authorize access="hasRole('LECTURER')"><a href="<c:url value="/lecture/poll/list/addPoll" />">Add Poll</a><br /><br /></security:authorize>
 
         <c:choose>
             <c:when test="${fn:length(pollDatabase) == 0}">
@@ -23,9 +23,14 @@
                     Question #${poll.poll_id}:
                     <a href="<c:url value="${poll.poll_id}" />">
                         <c:out value="${poll.question}" /></a>
+                        <security:authorize access="hasRole('LECTURER')">            
+                        [<a href="<c:url value="/lecture/poll/delete/${poll.poll_id}" />">Delete</a>]
+                    </security:authorize>
                     <br /><br />
                 </c:forEach>
             </c:otherwise>
         </c:choose>
+        <br>
+        <a href="<c:url value="/lecture" />">Return to list lectures</a>
     </body>
 </html>
