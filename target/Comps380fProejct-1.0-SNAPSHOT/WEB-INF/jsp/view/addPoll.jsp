@@ -4,6 +4,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Poll Page</title>
+        <style>
+            html{
+                font-family: sans-serif, monospace;
+            }
+        </style>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>

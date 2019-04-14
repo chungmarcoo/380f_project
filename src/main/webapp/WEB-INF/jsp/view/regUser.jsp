@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Registration</title>
+        <title>Sign-up</title>
+                <style>
+            html{
+                font-family: sans-serif, monospace;
+            }
+        </style>
     </head>
     <body>
-        <h2>Registration</h2>
+        <h2>Sign-up</h2>
         <form:form method="POST" enctype="multipart/form-data"
                    modelAttribute="lectureUser">
             <form:label path="username">Username</form:label><br/>

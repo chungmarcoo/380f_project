@@ -2,15 +2,20 @@
 <html>
     <head>
         <title>Login</title>
+                <style>
+            html{
+                font-family: sans-serif, monospace;
+            }
+        </style>
     </head>
     <body>
+        <h2>Login</h2>       
         <c:if test="${param.error != null}">
-            <p>Login failed.</p>
+            <p style="color:red">Login failed.</p>
         </c:if>
         <c:if test="${param.logout != null}">
-            <p>You have logged out.</p>
+            <p style="color:red">You have logged out.</p>
         </c:if>
-        <h2>Login</h2>       
         <form action="login" method="POST">
             <label for="username">Username:</label><br/>
             <input type="text" id="username" name="username" /><br/><br/>

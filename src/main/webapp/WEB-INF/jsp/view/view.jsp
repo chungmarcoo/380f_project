@@ -3,13 +3,18 @@
     <head>
         <title>Lecture</title>
         <style>
-        table {
-          border-collapse: collapse;
-        }
+            table {
+                border-collapse: collapse;
+            }
 
-        table, td, th {
-          border: 1px solid black;
-        }
+            table, td, th {
+                border: 1px solid black;
+            }
+           
+            html{
+                font-family: sans-serif, monospace;
+            }
+       
         </style>
     </head>
     <body>
@@ -20,15 +25,16 @@
         </form>
 
         <h2>Lecture ${lecture.id}: <c:out value="${lecture.subject}" /></h2>
-        <security:authorize access="hasRole('LECTURER') or principal.username=='${lecture.customerName}'">            
-            [<a href="<c:url value="/lecture/edit/${lecture.id}" />">Edit</a>]
+        <a href="<c:url value="/lecture" />"><button>Home</button></a>
+                <security:authorize access="hasRole('LECTURER') or principal.username=='${lecture.customerName}'">            
+            <a href="<c:url value="/lecture/edit/${lecture.id}" />"><button>Edit</button></a>
         </security:authorize>
         <security:authorize access="hasRole('LECTURER')">            
-            [<a href="<c:url value="/lecture/delete/${lecture.id}" />">Delete</a>]
+            <a href="<c:url value="/lecture/delete/${lecture.id}" />"><button>Remove</button></a>
         </security:authorize>
         <br /><br />
         <c:if test="${fn:length(lecture.attachments) > 0}">
-            Lecture Materials:
+            <h2>Materials:</h2>
             <c:forEach items="${lecture.attachments}" var="attachment"
                        varStatus="status">
                 <c:if test="${!status.first}">, </c:if>
@@ -39,14 +45,12 @@
 
         <table>
             <tr>
-<!--                <th>User</th>-->
-                <th>Comment</th>
+                <th>Comment    <a href="<c:url value="/lecture/${lectureId}/comment"/>"><button>Add</button></a></th>
             </tr>
 
             <c:choose>
                 <c:when test="${fn:length(commentDatabase) == 0}">
                     <tr>
-<!--                        <td colspan="2"><i>There are no comments.</i></td>-->
                         <td><i>There are no comments.</i></td>
                     </tr>
                 </c:when>
@@ -56,16 +60,13 @@
 <!--                            <td><c:out value="${entry.username}" /></td>-->
                             <td>(<c:out value="${entry.username}" />):<c:out value="${entry.comment}" />
                                 <security:authorize access="hasRole('LECTURER') or principal.username=='${entry.username}'">
-                                [<a href="<c:url value="deleteComment/${lectureId}/${entry.id}" />">Delete</a>]
-                            </security:authorize></td>
+                                    <a href="<c:url value="deleteComment/${lectureId}/${entry.id}" />"><button>Remove</button></a>
+                                </security:authorize></td>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
 
         </table><br>
-
-        <a href="<c:url value="/lecture/${lectureId}/comment"/>">Add a Comment</a><br><br>
-        <a href="<c:url value="/lecture" />">Return to list lectures</a>
     </body>
 </html>

@@ -4,6 +4,20 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Poll Page</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            table, td, th {
+                border: 1px solid black;
+            }
+           
+            html{
+                font-family: sans-serif, monospace;
+            }
+        
+        </style>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
@@ -11,18 +25,25 @@
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        <h2>Question #${pollDatabase.poll_id}:${pollDatabase.question}</h2>
-        <p>There are ${pollAllCount} votes.</p>
-        <p>You voted to ${Ivote}</p>
+                
+        <h2>Question #${pollDatabase.poll_id}:${pollDatabase.question} (Votes: ${pollAllCount})</h2>
+        <a href="<c:url value="/lecture/list" />"><button>Home</button></a>        
+
         <form:form method="POST" modelAttribute="ansPollForm">
-            <form:radiobutton path="chooseOption" value="${pollDatabase.chooseOption1}"/>${pollDatabase.chooseOption1}##${pollCount1}<br>
-            <form:radiobutton path="chooseOption" value="${pollDatabase.chooseOption2}"/>${pollDatabase.chooseOption2}##${pollCount2}<br>
-            <form:radiobutton path="chooseOption" value="${pollDatabase.chooseOption3}"/>${pollDatabase.chooseOption3}##${pollCount3}<br>
-            <form:radiobutton path="chooseOption" value="${pollDatabase.chooseOption4}"/>${pollDatabase.chooseOption4}##${pollCount4}<br><br>
+            <table>
+                <tr><th><p>Your Vote: ${userVoted}</p></th><th>Count</th></tr>
+                <c:forEach items="${pollOptions}" var="option" varStatus="loop">   
+                    <c:if test="${ !empty( option ) }">
+                    <tr>
+                        <td><form:radiobutton path="chooseOption" value="${option}"/> <c:out value="${option}"/></td>
+                        <td><label style="padding-left: 15px">${pollCount[loop.index]}</label></td>
+                    </tr>
+                        </c:if> 
+                    </c:forEach>   
+            </table>      
             <form:hidden path="username" value="${principal.username}"/>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Vote"/>
         </form:form>
-        <br>
-        <a href="<c:url value="/lecture/poll/list" />">Return to poll page</a>
+        <br>        
     </body>
 </html>

@@ -8,10 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ouhk.comps380f.dao.AttachmentRepository;
 import ouhk.comps380f.dao.LectureRepository;
+import ouhk.comps380f.dao.PollRepository;
 import ouhk.comps380f.exception.AttachmentNotFound;
 import ouhk.comps380f.exception.LectureNotFound;
 import ouhk.comps380f.model.Attachment;
 import ouhk.comps380f.model.Lecture;
+import ouhk.comps380f.model.Poll;
 
 @Service
 public class LectureServiceImpl implements LectureService {
@@ -22,6 +24,15 @@ public class LectureServiceImpl implements LectureService {
     @Resource
     private AttachmentRepository attachmentRepo;
 
+    @Resource
+    private PollRepository pollRepo;
+
+    @Override
+    @Transactional
+    public List<Poll> getPolls() {
+        return pollRepo.findAll();
+    }
+    
     @Override
     @Transactional
     public List<Lecture> getLectures() {

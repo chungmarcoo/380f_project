@@ -40,6 +40,7 @@ public class LectureController {
     @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String list(ModelMap model) {
         model.addAttribute("lectureDatabase", lectureService.getLectures());
+        model.addAttribute("pollDatabase", lectureService.getPolls());
         return "list";
     }
 

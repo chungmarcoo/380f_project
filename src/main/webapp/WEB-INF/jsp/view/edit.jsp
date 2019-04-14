@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <!--<link rel="stylesheet" href="/css/add.css">-->
-        <title>Edit the Lecture</title>
+        <title>Edit Lecture Page</title>
+        <style>
+            html{
+                font-family: sans-serif, monospace;
+            }
+        </style>
+        
 <!--        <style>
             .files input {
                 outline: 2px dashed #92b0b3;
@@ -60,26 +64,23 @@
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-
-        <h2>Lecture ${lecture.id}</h2>
-        <form:form method="POST" enctype="multipart/form-data"
-                   modelAttribute="lectureForm">   
-            <form:label path="subject">Subject</form:label><br/>
-            <form:input type="text" path="subject" /><br/><br/>
+        <h1>Lecture ${lecture.id}</h1>
+        <a href="<c:url value="/lecture" />"><button>Home</button></a><br/><br/>
+        <form:form method="POST" enctype="multipart/form-data"  modelAttribute="lectureForm">   
+            <form:label path="subject"><b>Subject:</b></form:label><br/>
+            <form:input type="text" path="subject" style="width:300px" /><br/><br/>
             <c:if test="${fn:length(lecture.attachments) > 0}">
-                <b>Lecture Materials:</b><br/>
+                <h2>Materials:</h2>
                 <ul>
                     <c:forEach items="${lecture.attachments}" var="attachment">
                         <li>
                             <c:out value="${attachment.name}" />
-                            [<a href="<c:url
-                                    value="/lecture/${lecture.id}/delete/${attachment.name}"
-                                    />">Delete</a>]
+                            <a href="<c:url value="/lecture/${lecture.id}/delete/${attachment.name}"/>"><button>Remove</button></a>
                         </li>
                     </c:forEach>
                 </ul>
             </c:if>
-            <b>Upload New Materials</b><br />
+                <h2>Upload Materials</h2>
 <!--            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -92,6 +93,5 @@
             </div>-->
             <input type="submit" value="Save"/><br/><br/>
         </form:form>
-        <a href="<c:url value="/lecture" />">Return to list lectures</a>
     </body>
 </html>

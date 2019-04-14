@@ -124,18 +124,30 @@ public class PollController {
     public String addPollFrom(addPollForm form,
             ModelMap model, HttpServletRequest request) throws Exception {
         pollService.createPoll(form.getQuestion(), form.getChooseOption1(), form.getChooseOption2(), form.getChooseOption3(), form.getChooseOption4());
-        return "redirect:/lecture/poll/list";
+        return "redirect:/lecture/list";
     }
 
     @RequestMapping(value = "/poll/{poll_id}", method = RequestMethod.GET)
     public ModelAndView createAnsForm(@PathVariable("poll_id") long poll_id, ModelMap model, HttpServletRequest request) {
+        long[] pollCount = new long[]{pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption1()),
+        pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption2()),
+        pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption3()),
+        pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption4())};
+        
+        String[] pollOptions = new String[]{pollService.getPoll(poll_id).getChooseOption1(),
+            pollService.getPoll(poll_id).getChooseOption2(),
+            pollService.getPoll(poll_id).getChooseOption3(),
+            pollService.getPoll(poll_id).getChooseOption4()}; 
         model.addAttribute("pollDatabase", pollService.getPoll(poll_id));
         model.addAttribute("pollAllCount", pollService.countAllByPollId(poll_id));
-        model.addAttribute("pollCount1", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption1()));
-        model.addAttribute("pollCount2", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption2()));
-        model.addAttribute("pollCount3", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption3()));
-        model.addAttribute("pollCount4", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption4()));
-        model.addAttribute("Ivote", pollService.findChooseOptionByPollIdAndUsername(poll_id, request.getUserPrincipal().getName()));
+        model.addAttribute("pollCount", pollCount);
+        model.addAttribute("pollOptions", pollOptions);
+        
+//        model.addAttribute("pollCount1", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption1()));
+//        model.addAttribute("pollCount2", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption2()));
+//        model.addAttribute("pollCount3", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption3()));
+//        model.addAttribute("pollCount4", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption4()));
+        model.addAttribute("userVoted", pollService.findChooseOptionByPollIdAndUsername(poll_id, request.getUserPrincipal().getName()));
         return new ModelAndView("viewPoll", "ansPollForm", new ansPollForm());
     }
 
@@ -149,7 +161,7 @@ public class PollController {
     @RequestMapping(value = "/poll/delete/{poll_id}", method = RequestMethod.GET)
     public String delPoll(@PathVariable("poll_id") long poll_id) throws Exception {
         pollService.delPoll(poll_id);
-        return "redirect:/lecture/poll/list";
+        return "redirect:/lecture/list";
     }
 
 }
