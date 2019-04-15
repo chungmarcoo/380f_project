@@ -7,3 +7,11 @@
     chooseoption4 VARCHAR(255) NOT NULL,
     PRIMARY KEY (poll_id)
 );
+
+CREATE TABLE pollchooseoption(
+    id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    poll_id INTEGER NOT NULL,
+    userName VARCHAR(50) NOT NULL,
+    chooseoption VARCHAR(255) NOT NULL,
+    PRIMARY KEY(id)
+);

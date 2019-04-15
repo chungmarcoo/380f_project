@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
-import ouhk.comps380f.model.Poll;
-import ouhk.comps380f.exception.PollNotFound;
 import ouhk.comps380f.exception.PollCommentNotFound;
 import ouhk.comps380f.exception.PollNotFound;
 import ouhk.comps380f.service.PollService;
@@ -185,10 +183,6 @@ public class PollController {
         model.addAttribute("pollOptions", pollOptions);
                 model.addAttribute("poll_id", poll_id);
         model.addAttribute("pollCommentDatabase", pollService.getComment(poll_id));
-//        model.addAttribute("pollCount1", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption1()));
-//        model.addAttribute("pollCount2", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption2()));
-//        model.addAttribute("pollCount3", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption3()));
-//        model.addAttribute("pollCount4", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption4()));
         model.addAttribute("userVoted", pollService.findChooseOptionByPollIdAndUsername(poll_id, request.getUserPrincipal().getName()));
         return new ModelAndView("viewPoll", "ansPollForm", new ansPollForm());
     }
@@ -198,13 +192,6 @@ public class PollController {
             ModelMap model, HttpServletRequest request) throws Exception {
         pollService.ansPoll(poll_id, request.getUserPrincipal().getName(), form.getChooseOption());
         return "redirect:/lecture/poll/{poll_id}";
-    }
-
-    @RequestMapping(value = "/poll/delete/{poll_id}", method = RequestMethod.GET)
-    public String delPoll(@PathVariable("poll_id") long poll_id) throws Exception, PollCommentNotFound, PollNotFound  {
-        pollService.delPoll(poll_id);
-        pollService.delAllComment(poll_id);
-        return "redirect:/lecture/list";
     }
 
         @RequestMapping(value = "{pollId}/pollcomment", method = RequestMethod.GET)
@@ -219,6 +206,13 @@ public class PollController {
         return "redirect:/lecture/poll/" + pollId;
     }
 
+    @RequestMapping(value = "/poll/delete/{poll_id}", method = RequestMethod.GET)
+    public String delPoll(@PathVariable("poll_id") long poll_id) throws Exception, PollCommentNotFound, PollNotFound  {
+        pollService.delPoll(poll_id);
+        pollService.delAllComment(poll_id);
+        return "redirect:/lecture/list";
+    }    
+    
     @RequestMapping(value = {"/lecture/poll/deleteComment/{pollId}/{Id}", "poll/deleteComment/{pollId}/{Id}"}, method = RequestMethod.GET)
     public View delComment(@PathVariable("Id") long Id, @PathVariable("pollId") long poll_id)
             throws PollCommentNotFound {

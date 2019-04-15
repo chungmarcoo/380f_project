@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Poll Page</title>
-                <style>
+        <style>
             html{
                 font-family: sans-serif, monospace;
             }
@@ -16,12 +16,10 @@
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-                <br>
-                <h1>Poll Page</h1> 
-                <a href="<c:url value="/lecture" />"><button>Home</button></a>
-        
-                <security:authorize access="hasRole('LECTURER')"><a href="<c:url value="/lecture/poll/list/addPoll" />"><button>Add[+]</button></a></security:authorize>
-
+        <br>
+        <h1>Poll Page</h1> 
+        <a href="<c:url value="/lecture" />"><button>Home</button></a>
+        <security:authorize access="hasRole('LECTURER')"><a href="<c:url value="/lecture/poll/list/addPoll" />"><button>Add[+]</button></a></security:authorize>
         <c:choose>
             <c:when test="${fn:length(pollDatabase) == 0}">
                 <i>There are no poll in the system.</i>
@@ -33,7 +31,7 @@
                     <a href="<c:url value="${poll.poll_id}" />">
                         <c:out value="${poll.question}" /></a>
                         <security:authorize access="hasRole('LECTURER')">            
-                            <a href="<c:url value="/lecture/poll/delete/${poll.poll_id}" />"><button>Remove</button></a>
+                        <a href="<c:url value="/lecture/poll/delete/${poll.poll_id}" />"><button>Remove</button></a>
                     </security:authorize>
                     <br /><br />
                 </c:forEach>

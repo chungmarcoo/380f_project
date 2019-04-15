@@ -52,7 +52,5 @@ public class PollChooseOption implements Serializable {
 
     public void setChooseOption(String chooseoption) {
         this.chooseoption = chooseoption;
-    }
-
-    
+    }    
 }

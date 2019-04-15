@@ -8,7 +8,7 @@
             html{
                 font-family: sans-serif, monospace;
             }
-            
+
             input[type='text']{
                 width:300px;
             }

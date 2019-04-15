@@ -10,11 +10,11 @@
             table, td, th {
                 border: 1px solid black;
             }
-           
+
             html{
                 font-family: sans-serif, monospace;
             }
-       
+
         </style>
     </head>
     <body>
@@ -26,7 +26,7 @@
 
         <h2>Lecture ${lecture.id}: <c:out value="${lecture.subject}" /></h2>
         <a href="<c:url value="/lecture" />"><button>Home</button></a>
-                <security:authorize access="hasRole('LECTURER') or principal.username=='${lecture.customerName}'">            
+        <security:authorize access="hasRole('LECTURER') or principal.username=='${lecture.customerName}'">            
             <a href="<c:url value="/lecture/edit/${lecture.id}" />"><button>Edit</button></a>
         </security:authorize>
         <security:authorize access="hasRole('LECTURER')">            
@@ -57,7 +57,6 @@
                 <c:otherwise>
                     <c:forEach items="${commentDatabase}" var="entry">
                         <tr>
-<!--                            <td><c:out value="${entry.username}" /></td>-->
                             <td>(<c:out value="${entry.username}" />):<c:out value="${entry.comment}" />
                                 <security:authorize access="hasRole('LECTURER') or principal.username=='${entry.username}'">
                                     <a href="<c:url value="deleteComment/${lectureId}/${entry.id}" />"><button>Remove</button></a>
@@ -66,7 +65,6 @@
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-
         </table><br>
     </body>
 </html>

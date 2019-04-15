@@ -1,9 +1,0 @@
- CREATE TABLE poll (
-    poll_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), 
-    question VARCHAR(255) NOT NULL,
-    chooseoption1 VARCHAR(255) NOT NULL,
-    chooseoption2 VARCHAR(255) NOT NULL,
-    chooseoption3 VARCHAR(255) NOT NULL,
-    chooseoption4 VARCHAR(255) NOT NULL,
-    PRIMARY KEY (poll_id)
-);

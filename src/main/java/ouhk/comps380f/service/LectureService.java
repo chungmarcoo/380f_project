@@ -14,9 +14,9 @@ public interface LectureService {
             String body, List<MultipartFile> attachments) throws IOException;
 
     public List<Lecture> getLectures();
-    
+
     public List<Poll> getPolls();
-    
+
     public Lecture getLecture(long id);
 
     public void updateLecture(long id, String subject,

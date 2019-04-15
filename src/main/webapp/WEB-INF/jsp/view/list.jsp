@@ -51,7 +51,6 @@
         </c:choose>
 
         <h2>Poll</h2>
-<!--        <a href="<c:url value="/lecture/poll/list" />">Poll Page</a><br/><br/>-->
         <c:choose>
             <c:when test="${fn:length(pollDatabase) == 0}">
                 <i>There are no polls in the system.</i>
@@ -62,7 +61,7 @@
                     <a href="<c:url value="/lecture/poll/${poll.poll_id}" />">
                         <c:out value="${poll.question}" /></a>
                         <security:authorize access="hasRole('LECTURER')">            
-                            <a href="<c:url value="/lecture/poll/delete/${poll.poll_id}" />"><button>Remove</button></a>
+                        <a href="<c:url value="/lecture/poll/delete/${poll.poll_id}" />"><button>Remove</button></a>
                     </security:authorize>
                     <br /><br />
                 </c:forEach>

@@ -16,9 +16,9 @@ public interface PollChooseOptionRepository extends JpaRepository<PollChooseOpti
     @Query("Select count(p) From PollChooseOption p Where p.poll_id=?1 And p.chooseoption = ?2")
     public long countAllByPollIdAndChooseOption(long poll_id, String chooseoption);
 
-    @Query("Select chooseoption From PollChooseOption p Where p.poll_id = ?1 And p.userName=?2")
-    public String findChooseOptionByPollIdAndUsername(long poll_id, String userName);
-
     @Query("Select p From PollChooseOption p Where p.poll_id = ?1")
     public List<PollChooseOption> findAnsPollByPollId(long poll_id);
+    
+    @Query("Select chooseoption From PollChooseOption p Where p.poll_id = ?1 And p.userName=?2")
+    public String findChooseOptionByPollIdAndUsername(long poll_id, String userName);
 }

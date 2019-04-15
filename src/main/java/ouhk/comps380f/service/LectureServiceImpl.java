@@ -32,7 +32,7 @@ public class LectureServiceImpl implements LectureService {
     public List<Poll> getPolls() {
         return pollRepo.findAll();
     }
-    
+
     @Override
     @Transactional
     public List<Lecture> getLectures() {

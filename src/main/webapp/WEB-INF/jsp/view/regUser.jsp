@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Sign-up</title>
-                <style>
+        <style>
             html{
                 font-family: sans-serif, monospace;
             }
@@ -19,7 +19,7 @@
             <form:hidden path="roles" value="ROLE_STUDENT" />
             <input type="submit" value="Register"/>
         </form:form>
-            <br/>
+        <br/>
         <form action="<c:url value="/login" />" method="get">
             <input type="submit" value="Login" />
         </form>

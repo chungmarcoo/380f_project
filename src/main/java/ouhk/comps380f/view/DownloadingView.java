@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.View;
 
 public class DownloadingView implements View {
+
     private final String filename;
     private final String contentType;
     private final byte[] contents;
@@ -24,7 +25,7 @@ public class DownloadingView implements View {
 
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request,
-                   HttpServletResponse response) throws Exception {
+            HttpServletResponse response) throws Exception {
         response.setHeader("Content-Disposition", "attachment; filename=" + this.filename);
         response.setContentType("application/octet-stream");
 
@@ -32,4 +33,3 @@ public class DownloadingView implements View {
         stream.write(this.contents);
     }
 }
-

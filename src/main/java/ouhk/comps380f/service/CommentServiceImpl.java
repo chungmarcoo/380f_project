@@ -41,27 +41,6 @@ public class CommentServiceImpl implements CommentService {
         commentRepo.delete(deletedAllComment);
     }
 
-    /*
-    @Override
-    @Transactional
-    public List<Comment> getLectures() {
-        return commentRepo.findAll();
-    }
-
-    @Override
-    @Transactional(rollbackFor = AttachmentNotFound.class)
-    public void deleteAttachment(long lectureId, String name) throws AttachmentNotFound {
-        Lecture lecture = lectureRepo.findOne(lectureId);
-        for (Attachment attachment : lecture.getAttachments()) {
-            if (attachment.getName().equals(name)) {
-                lecture.deleteAttachment(attachment);
-                lectureRepo.save(lecture);
-                return;
-            }
-        }
-        throw new AttachmentNotFound();
-    }
-     */
     @Override
     @Transactional
     public long createComment(String userName, String cm,
@@ -79,31 +58,4 @@ public class CommentServiceImpl implements CommentService {
         return savedComment.getId();
     }
 
-    /*(@Override
-    @Transactional(rollbackFor = LectureNotFound.class)
-    public void updateLecture(long id, String subject,
-            String body, List<MultipartFile> attachments)
-            throws IOException, LectureNotFound {
-        Lecture updatedLecture = lectureRepo.findOne(id);
-        if (updatedLecture == null) {
-            throw new LectureNotFound();
-        }
-
-        updatedLecture.setSubject(subject);
-        updatedLecture.setBody(body);
-
-        for (MultipartFile filePart : attachments) {
-            Attachment attachment = new Attachment();
-            attachment.setName(filePart.getOriginalFilename());
-            attachment.setMimeContentType(filePart.getContentType());
-            attachment.setContents(filePart.getBytes());
-            attachment.setLecture(updatedLecture);
-            if (attachment.getName() != null && attachment.getName().length() > 0
-                    && attachment.getContents() != null
-                    && attachment.getContents().length > 0) {
-                updatedLecture.getAttachments().add(attachment);
-            }
-        }
-        lectureRepo.save(updatedLecture);
-    }*/
 }

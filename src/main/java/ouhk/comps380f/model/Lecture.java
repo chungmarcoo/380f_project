@@ -69,11 +69,9 @@ public class Lecture implements Serializable {
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
     }
-    
+
     public void deleteAttachment(Attachment attachment) {
         attachment.setLecture(null);
         this.attachments.remove(attachment);
     }
 }
-
-

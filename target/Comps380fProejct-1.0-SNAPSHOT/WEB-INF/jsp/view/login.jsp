@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Login</title>
-                <style>
+        <style>
             html{
                 font-family: sans-serif, monospace;
             }
@@ -14,7 +14,7 @@
             <p style="color:red">Login failed.</p>
         </c:if>
         <c:if test="${param.logout != null}">
-            <p style="color:red">You have logged out.</p>
+            <p style="color:red">You have logged out successfully.</p>
         </c:if>
         <form action="login" method="POST">
             <label for="username">Username:</label><br/>
@@ -26,7 +26,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="submit" value="Log In"/>
         </form>
-            <br/>
+        <br/>
         <form action="<c:url value="/register/create" />" method="get">
             <input type="submit" value="Sign Up" />
         </form>

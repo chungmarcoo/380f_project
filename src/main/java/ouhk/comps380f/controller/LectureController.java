@@ -96,7 +96,6 @@ public class LectureController {
             return "redirect:/lecture/list";
         }
         model.addAttribute("lecture", lecture);
-        //modifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodifiedmodified
         model.addAttribute("commentDatabase", commentService.getComment(lectureId));
         return "view";
     }
@@ -113,14 +112,6 @@ public class LectureController {
                     attachment.getMimeContentType(), attachment.getContents());
         }
         return new RedirectView("/lecture/list", true);
-    }
-
-    @RequestMapping(value = "delete/{lectureId}", method = RequestMethod.GET)
-    public String deleteLecture(@PathVariable("lectureId") long lectureId)
-            throws LectureNotFound, CommentNotFound {
-        commentService.delAllComment(lectureId);
-        lectureService.delete(lectureId);
-        return "redirect:/lecture/list";
     }
 
     @RequestMapping(value = "edit/{lectureId}", method = RequestMethod.GET)
@@ -168,5 +159,13 @@ public class LectureController {
             @PathVariable("attachment") String name) throws AttachmentNotFound {
         lectureService.deleteAttachment(lectureId, name);
         return "redirect:/lecture/edit/" + lectureId;
+    }
+    
+    @RequestMapping(value = "delete/{lectureId}", method = RequestMethod.GET)
+    public String deleteLecture(@PathVariable("lectureId") long lectureId)
+            throws LectureNotFound, CommentNotFound {
+        commentService.delAllComment(lectureId);
+        lectureService.delete(lectureId);
+        return "redirect:/lecture/list";
     }
 }

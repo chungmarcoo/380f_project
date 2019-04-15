@@ -18,7 +18,7 @@ public class PollComment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentid")
     private long id;
-    
+
     private String username;
 
     private String comment;
@@ -26,18 +26,9 @@ public class PollComment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "poll_id")
     private Poll poll;
-    
-    @Column(name = "poll_id", insertable=false, updatable=false)
+
+    @Column(name = "poll_id", insertable = false, updatable = false)
     private long poll_id;
-
-    /*public Comment() {
-    }
-
-    public Comment(String username, String comment, int lecture_id) {
-        this.username = username;
-        this.comment = comment;
-        this.lecture_id = lecture_id;
-    }*/
 
     public long getId() {
         return id;
@@ -78,7 +69,4 @@ public class PollComment implements Serializable {
     public void setPoll_id(long poll_id) {
         this.poll_id = poll_id;
     }
-    
-    
-
 }

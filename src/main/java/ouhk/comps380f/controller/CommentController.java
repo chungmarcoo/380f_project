@@ -19,10 +19,6 @@ import ouhk.comps380f.exception.CommentNotFound;
 @RequestMapping("lecture")
 public class CommentController {
 
-    //private Map<Integer, Comment> commentDatabase = new Hashtable<>();
-
-    /*@Resource
-    CommentRepository commentRepo;*/
     @Autowired
     private CommentService commentService;
 
@@ -83,12 +79,6 @@ public class CommentController {
     @RequestMapping(value = "{lectureId}/comment", method = RequestMethod.POST)
     public View addComment(@PathVariable("lectureId") long lectureId, cmForm form,
             ModelMap model, HttpServletRequest request) throws Exception {
-        /*Comment comment = new Comment();
-        comment.setLecture_id(form.getLecture_id());
-        comment.setComment(form.getComment());
-        comment.setUsername(form.getUsername());*/
-
-        //Comment comment = new Comment("user", "comment", 5);
         commentService.createComment(request.getUserPrincipal().getName(), form.getComment(), form.getLecture_id());
         return new RedirectView("/lecture/view/" + lectureId, true);
     }
@@ -99,6 +89,4 @@ public class CommentController {
         commentService.delComment(Id);
         return new RedirectView("/lecture/view/" + lectureId, true);
     }
-
-
 }
