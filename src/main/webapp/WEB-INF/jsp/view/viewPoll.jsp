@@ -44,6 +44,38 @@
             <form:hidden path="username" value="${principal.username}"/>
             <input type="submit" value="Vote"/>
         </form:form>
-        <br>        
+        <br>   
+        
+                <br><br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Comment <a href="<c:url value="/lecture/${poll_id}/pollcomment"/>">Add</a></th>
+                    </tr>
+                </thead>
+
+                <c:choose>
+                    <c:when test="${fn:length(pollCommentDatabase) == 0}">
+                        <tbody>
+                            <tr>
+                                <td colspan="2"><i>There are no comments.</i></td>
+                            </tr>
+                        </tbody>
+                    </c:when>
+                    <c:otherwise>
+                        <tbody>
+                            <c:forEach items="${pollCommentDatabase}" var="entry">
+                                <tr>
+<!--                                    <td><c:out value="${entry.username}" /></td>-->
+                                     <td>(<c:out value="${entry.username}" />):<c:out value="${entry.comment}" />
+                                        <security:authorize access="hasRole('LECTURER')">
+                                            <a href="<c:url value="deleteComment/${poll_id}/${entry.id}" />" class="text-danger"><button>Remove</button></a>
+                                        </security:authorize></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </c:otherwise>
+                </c:choose>
+            </table><br>
     </body>
 </html>

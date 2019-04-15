@@ -7,6 +7,8 @@ import ouhk.comps380f.exception.AttachmentNotFound;
 import ouhk.comps380f.exception.PollNotFound;
 import ouhk.comps380f.exception.PollChooseOptionNotFound;
 import ouhk.comps380f.model.Poll;
+import ouhk.comps380f.model.PollComment;
+import ouhk.comps380f.exception.PollCommentNotFound;
 
 public interface PollService {
 
@@ -28,7 +30,13 @@ public interface PollService {
     
     public void delPoll(long poll_id) throws Exception;
     
-    
+    public long createComment(String username, String cm, long poll_id) throws Exception;
+
+    public List<PollComment> getComment(long poll_id);
+
+    public void delComment(long id) throws PollCommentNotFound;
+
+    public void delAllComment(long pollId) throws PollCommentNotFound;
     /*public List<Lecture> getLectures();
 
     public void updateLecture(long id, String subject,

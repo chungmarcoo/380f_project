@@ -11,6 +11,7 @@ C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\Lecture
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\PollService.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\exception\LectureNotFound.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\model\Lecture.java
+C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\dao\PollCommentRepository.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\exception\CommentNotFound.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\view\DownloadingView.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\controller\LectureUserController.java
@@ -20,6 +21,7 @@ C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\dao\LectureRepo
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\controller\PollController.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\model\Attachment.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\CommentServiceImpl.java
+C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\model\PollComment.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\PollServiceImpl.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\LectureUserService.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\dao\AttachmentRepository.java
@@ -28,6 +30,7 @@ C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\controller\Inde
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\dao\PollRepository.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\AttachmentServiceImpl.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\service\LectureServiceImpl.java
+C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\exception\PollCommentNotFound.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\dao\CommentRepository.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\exception\PollChooseOptionNotFound.java
 C:\Users\Ethan\Desktop\380f_project\src\main\java\ouhk\comps380f\dao\UserRoleRepository.java
