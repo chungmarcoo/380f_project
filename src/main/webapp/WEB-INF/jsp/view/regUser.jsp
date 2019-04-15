@@ -15,8 +15,8 @@
             <form:label path="username">Username</form:label><br/>
             <form:input type="text" path="username" /><br/><br/>
             <form:label path="password">Password</form:label><br/>
-            <form:input type="text" path="password" /><br/><br/>
-            <form:hidden path="roles" value="STUDENT" />
+            <form:input type="password" path="password" /><br/><br/>
+            <form:hidden path="roles" value="ROLE_STUDENT" />
             <input type="submit" value="Register"/>
         </form:form>
             <br/>

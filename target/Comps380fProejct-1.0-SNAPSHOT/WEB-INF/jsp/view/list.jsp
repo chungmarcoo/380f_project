@@ -11,6 +11,7 @@
     <body>
         <security:authorize access="!isAuthenticated()">
             <a href="<c:url value="/login"/>"><button>Login</button></a>
+            <a href="<c:url value="/register/create"/>"><button>Sign-Up</button></a>
         </security:authorize>
         <security:authorize access="isAuthenticated()">
             <c:url var="logoutUrl" value="/logout"/>
