@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class LectureUser implements Serializable {
 
     @Id
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -26,8 +26,8 @@ public class LectureUser implements Serializable {
     public LectureUser() {
     }
 
-    public LectureUser(String userName, String password, String[] roles) {
-        this.userName = userName;
+    public LectureUser(String username, String password, String[] roles) {
+        this.username = username;
         this.password = password;
         for (String role : roles) {
             this.roles.add(new UserRole(this, role));
@@ -35,11 +35,11 @@ public class LectureUser implements Serializable {
     }
 
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public void setUsername(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

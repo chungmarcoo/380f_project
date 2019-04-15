@@ -20,11 +20,11 @@ public class UserRole implements Serializable {
     private int id;
 
     @Column(insertable = false, updatable = false)
-    private String userName;
+    private String username;
     private String role;
 
     @ManyToOne
-    @JoinColumn(name = "userName")
+    @JoinColumn(name = "username")
     private LectureUser user;
 
     public UserRole() {
@@ -44,11 +44,11 @@ public class UserRole implements Serializable {
     }
 
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public void setUsername(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getRole() {

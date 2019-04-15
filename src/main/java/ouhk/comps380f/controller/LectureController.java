@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 import ouhk.comps380f.exception.AttachmentNotFound;
-import ouhk.comps380f.exception.CommentNotFound;
 import ouhk.comps380f.exception.LectureNotFound;
 import ouhk.comps380f.model.Attachment;
 import ouhk.comps380f.model.Lecture;
@@ -40,10 +40,32 @@ public class LectureController {
     @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String list(ModelMap model) {
         model.addAttribute("lectureDatabase", lectureService.getLectures());
-        model.addAttribute("pollDatabase", lectureService.getPolls());
         return "list";
     }
-
+    
+    @RequestMapping(value = "edit/langage/chinese", method = RequestMethod.GET)
+    public String chineseEdit(HttpSession session) {
+        session.setAttribute("lang", "chinese");
+        long lectureId = (long) session.getAttribute("lectureId");
+        return "redirect:/lecture/edit/" + lectureId;
+    }
+    @RequestMapping(value = "edit/langage/english", method = RequestMethod.GET)
+    public String englishEdit(HttpSession session) {
+        session.setAttribute("lang", "english");
+        long lectureId = (long) session.getAttribute("lectureId");
+        return "redirect:/lecture/edit/" + lectureId;
+    } 
+    
+    @RequestMapping(value = "addNewCourseChinese", method = RequestMethod.GET)
+    public String chinese(HttpSession session) {
+        session.setAttribute("lang", "chinese");
+        return "redirect:/lecture/create";
+    }
+    @RequestMapping(value = "addNewCourseEnglish", method = RequestMethod.GET)
+    public String english(HttpSession session) {
+        session.setAttribute("lang", "english");
+        return "redirect:/lecture/create";
+    } 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView create() {
         return new ModelAndView("add", "lectureForm", new Form());
@@ -89,9 +111,9 @@ public class LectureController {
     }
 
     @RequestMapping(value = "view/{lectureId}", method = RequestMethod.GET)
-    public String view(@PathVariable("lectureId") long lectureId,
-            ModelMap model) {
+    public String view(@PathVariable("lectureId") long lectureId,ModelMap model,HttpSession session) {
         Lecture lecture = lectureService.getLecture(lectureId);
+        session.setAttribute("lectureId", lectureId);
         if (lecture == null) {
             return "redirect:/lecture/list";
         }
@@ -117,18 +139,18 @@ public class LectureController {
 
     @RequestMapping(value = "delete/{lectureId}", method = RequestMethod.GET)
     public String deleteLecture(@PathVariable("lectureId") long lectureId)
-            throws LectureNotFound, CommentNotFound {
-        commentService.delAllComment(lectureId);
+            throws LectureNotFound {
         lectureService.delete(lectureId);
         return "redirect:/lecture/list";
     }
 
     @RequestMapping(value = "edit/{lectureId}", method = RequestMethod.GET)
     public ModelAndView showEdit(@PathVariable("lectureId") long lectureId,
-            Principal principal, HttpServletRequest request) {
+            Principal principal, HttpServletRequest request,HttpSession session) {
         Lecture lecture = lectureService.getLecture(lectureId);
+        session.setAttribute("lectureId", lectureId);
         if (lecture == null
-                || (!request.isUserInRole("LECTURER")
+                || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(lecture.getCustomerName()))) {
             return new ModelAndView(new RedirectView("/lecture/list", true));
         }
@@ -150,7 +172,7 @@ public class LectureController {
             throws IOException, LectureNotFound {
         Lecture lecture = lectureService.getLecture(lectureId);
         if (lecture == null
-                || (!request.isUserInRole("LECTURER")
+                || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(lecture.getCustomerName()))) {
             return new RedirectView("/lecture/list", true);
         }

@@ -22,16 +22,14 @@
     <b:bean id="dataSource"
             class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <b:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
-        <b:property name="url" value="jdbc:derby://localhost:1527/course" />
+        <b:property name="url" value="jdbc:derby://localhost:1527/lecturesupport" />
         <b:property name="username" value="nbuser" />
         <b:property name="password" value="nbuser" />
     </b:bean>    
 
     <http auto-config="true">
-        <intercept-url pattern="/user/**" access="hasRole('LECTURER')" />
-        <intercept-url pattern="/lecture/delete/**" access="hasRole('LECTURER')" />
-        <intercept-url pattern="/lecture/list" access="permitAll" />
-        <intercept-url pattern="/lecture/**" access="hasAnyRole('STUDENT','LECTURER')" />
+        <intercept-url pattern="/lecture/delete/**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/lecture/**" access="hasAnyRole('USER','ADMIN')" />
         <form-login login-page="/login" authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"
                 invalidate-session="true"

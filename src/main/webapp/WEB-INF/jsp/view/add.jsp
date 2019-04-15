@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
+
     <head>
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <!--<link rel="stylesheet" href="/css/add.css">-->
         <title>Add a New Lecture</title>
         <style>
-            html{
-                font-family: sans-serif, monospace;
-            }
-       
-/*            .files input {
+            .files input {
                 outline: 2px dashed #92b0b3;
                 outline-offset: -10px;
                 -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
@@ -53,33 +53,101 @@
                 font-weight: 600;
                 text-transform: capitalize;
                 text-align: center;
-            }*/
+            }
         </style>
     </head>
     <body>
+            <a href="<c:url value="/lecture/addNewCourseChinese" />">中文</a>
+            <a href="<c:url value="/lecture/addNewCourseEnglish" />">English</a>
+            <c:out value="${sessionScope.lang}" />
         <c:url var="logoutUrl" value="/logout"/>
         <form action="${logoutUrl}" method="post">
-            <input type="submit" value="Log out" />
+                             <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+<input type="submit" value="Log out" />
+                </c:when>
+                <c:otherwise>
+<input type="submit" value="登出" />
+                </c:otherwise>
+            </c:choose>
+
+                 <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+<a href="<c:url value="/lecture/list" />">Home</a>
+                </c:when>
+                <c:otherwise>
+<a href="<c:url value="/lecture/list" />">返回</a>
+                </c:otherwise>
+            </c:choose>
+            
+            
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-        <h1>Add a Lecture</h1>
-        <a href="<c:url value="/lecture" />"><button>Home</button></a><br/><br/>
+        <h2>
+                 <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+                Create a Lecture
+                </c:when>
+                <c:otherwise>
+                    創建課程
+                </c:otherwise>
+            </c:choose>
+            </h2>
         <form:form method="POST" enctype="multipart/form-data" modelAttribute="lectureForm">
-            <form:label path="subject">Subject</form:label><br/>
+            <form:label path="subject">
+                <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+                Subject
+                </c:when>
+                <c:otherwise>
+                    科目
+                </c:otherwise>
+            </c:choose>
+                </form:label><br/>
             <form:input type="text" path="subject" /><br/><br/>
-            <h2>Materials</h2>
-<!--            <div class="container">
+            <b>
+                <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+                Course Materials
+                </c:when>
+                <c:otherwise>
+                筆記
+                </c:otherwise>
+            </c:choose>
+                </b><br/>
+
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group files">-->
-                            <label>Upload Your File:(Drag)</label>
-                            <input type="file" name="attachments" multiple="multiple" class="form-control"/>
-<!--                        </div>
+                            <div class="form-group files">
+                                <label>
+                                                     <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+                Upload Your File
+                </c:when>
+                <c:otherwise>
+                    上載檔案
+                </c:otherwise>
+            </c:choose>
+                                    </label>
+                                                 <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+<input type="file" name="attachments" multiple="multiple" class="form-control"/>
+                </c:when>
+                <c:otherwise>
+<input type="file" name="檔案" multiple="multiple" class="form-control"/>
+                </c:otherwise>
+            </c:choose>
+                                
+                            </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
+
+
             <br/>
+            
             <input type="submit" value="Submit"/>
         </form:form>
 

@@ -4,20 +4,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Poll Page</title>
-        <style>
-            table {
-                border-collapse: collapse;
-            }
-
-            table, td, th {
-                border: 1px solid black;
-            }
-           
-            html{
-                font-family: sans-serif, monospace;
-            }
-        
-        </style>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
@@ -25,25 +11,36 @@
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-                
-        <h2>Question #${pollDatabase.poll_id}:${pollDatabase.question} (Votes: ${pollAllCount})</h2>
-        <a href="<c:url value="/lecture/list" />"><button>Home</button></a>        
-
+        <h2>
+                 <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+Question #${pollDatabase.poll_id}:${pollDatabase.question}
+                </c:when>
+                <c:otherwise>
+問題 #${pollDatabase.poll_id}:${pollDatabase.question}
+                </c:otherwise>
+            </c:choose>
+            
+            </h2>
         <form:form method="POST" modelAttribute="ansPollForm">
-            <table>
-                <tr><th><p>Your Vote: ${userVoted}</p></th><th>Count</th></tr>
-                <c:forEach items="${pollOptions}" var="option" varStatus="loop">   
-                    <c:if test="${ !empty( option ) }">
-                    <tr>
-                        <td><form:radiobutton path="chooseOption" value="${option}"/> <c:out value="${option}"/></td>
-                        <td><label style="padding-left: 15px">${pollCount[loop.index]}</label></td>
-                    </tr>
-                        </c:if> 
-                    </c:forEach>   
-            </table>      
+            <form:radiobutton path="response" value="${pollDatabase.response1}" checked="checked"/>${pollDatabase.response1}<br>
+            <form:radiobutton path="response" value="${pollDatabase.response2}"/>${pollDatabase.response2}<br>
+            <form:radiobutton path="response" value="${pollDatabase.response3}"/>${pollDatabase.response3}<br>
+            <form:radiobutton path="response" value="${pollDatabase.response4}"/>${pollDatabase.response4}<br><br>
             <form:hidden path="username" value="${principal.username}"/>
-            <input type="submit" value="Vote"/>
+            <input type="submit" value="Submit"/>
         </form:form>
-        <br>        
+        <br>
+        <a href="<c:url value="/lecture/poll/list" />">
+                <c:choose>
+                <c:when test ="${sessionScope.lang=='english'}">
+                Return to poll page
+                </c:when>
+                <c:otherwise>
+回到投票頁面
+                </c:otherwise>
+            </c:choose>
+            
+            </a>
     </body>
 </html>

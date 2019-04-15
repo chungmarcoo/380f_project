@@ -31,16 +31,6 @@ public class CommentServiceImpl implements CommentService {
         commentRepo.delete(deletedComment);
     }
 
-    @Override
-    @Transactional(rollbackFor = CommentNotFound.class)
-    public void delAllComment(long lectureId) throws CommentNotFound {
-        List<Comment> deletedAllComment = commentRepo.findAllByLectureId(lectureId);
-        if (deletedAllComment == null) {
-            throw new CommentNotFound();
-        }
-        commentRepo.delete(deletedAllComment);
-    }
-
     /*
     @Override
     @Transactional
@@ -64,12 +54,12 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     @Transactional
-    public long createComment(String userName, String cm,
+    public long createComment(String username, String cm,
             long lecture_id) throws Exception {
         Comment comment = new Comment();
         Lecture lecture = new Lecture();
 
-        comment.setUsername(userName);
+        comment.setUsername(username);
         comment.setComment(cm);
         lecture.setId(lecture_id);
         comment.setLecture_id(lecture_id);

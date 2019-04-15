@@ -2,6 +2,7 @@ package ouhk.comps380f.controller;
 
 import java.io.IOException;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,16 +29,16 @@ public class LectureUserController {
 
     public static class Form {
 
-        private String userName;
+        private String username;
         private String password;
         private String[] roles;
 
         public String getUsername() {
-            return userName;
+            return username;
         }
 
-        public void setUsername(String userName) {
-            this.userName = userName;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public String getPassword() {
@@ -56,6 +57,18 @@ public class LectureUserController {
             this.roles = roles;
         }
     }
+    
+    @RequestMapping("langage/chinese")
+    public String chinese(HttpSession session) {
+        
+        session.setAttribute("lang", "chinese");
+        return "redirect:/user/list";
+    }
+    @RequestMapping("langage/english")
+    public String english(HttpSession session) {
+        session.setAttribute("lang", "english");
+        return "redirect:/user/list";
+    }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView create() {
@@ -71,9 +84,9 @@ public class LectureUserController {
         return new RedirectView("/user/list", true);
     }
 
-    @RequestMapping(value = "delete/{userName}", method = RequestMethod.GET)
-    public View deleteLecture(@PathVariable("userName") String userName) {
-        lectureUserRepo.delete(lectureUserRepo.findOne(userName));
+    @RequestMapping(value = "delete/{username}", method = RequestMethod.GET)
+    public View deleteLecture(@PathVariable("username") String username) {
+        lectureUserRepo.delete(lectureUserRepo.findOne(username));
         return new RedirectView("/user/list", true);
     }
 }

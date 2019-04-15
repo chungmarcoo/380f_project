@@ -1,6 +1,7 @@
 package ouhk.comps380f.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,7 +26,7 @@ public class PollController {
 
         private long poll_id;
         private String question;
-        private String chooseoption1, chooseoption2, chooseoption3, chooseoption4;
+        private String response1, response2, response3, response4;
 
         public long getPoll_id() {
             return poll_id;
@@ -43,36 +44,36 @@ public class PollController {
             this.question = question;
         }
 
-        public String getChooseOption1() {
-            return chooseoption1;
+        public String getResponse1() {
+            return response1;
         }
 
-        public void setChooseOption1(String chooseoption1) {
-            this.chooseoption1 = chooseoption1;
+        public void setResponse1(String response1) {
+            this.response1 = response1;
         }
 
-        public String getChooseOption2() {
-            return chooseoption2;
+        public String getResponse2() {
+            return response2;
         }
 
-        public void setChooseOption2(String chooseoption2) {
-            this.chooseoption2 = chooseoption2;
+        public void setResponse2(String response2) {
+            this.response2 = response2;
         }
 
-        public String getChooseOption3() {
-            return chooseoption3;
+        public String getResponse3() {
+            return response3;
         }
 
-        public void setChooseOption3(String chooseoption3) {
-            this.chooseoption3 = chooseoption3;
+        public void setResponse3(String response3) {
+            this.response3 = response3;
         }
 
-        public String getChooseOption4() {
-            return chooseoption4;
+        public String getResponse4() {
+            return response4;
         }
 
-        public void setChooseOption4(String chooseoption4) {
-            this.chooseoption4 = chooseoption4;
+        public void setResponse4(String response4) {
+            this.response4 = response4;
         }
 
     }
@@ -80,8 +81,8 @@ public class PollController {
     public static class ansPollForm {
 
         private long poll_id;
-        private String userName;
-        private String chooseoption;
+        private String username;
+        private String response;
 
         public long getPoll_id() {
             return poll_id;
@@ -92,19 +93,19 @@ public class PollController {
         }
 
         public String getUsername() {
-            return userName;
+            return username;
         }
 
-        public void setUsername(String userName) {
-            this.userName = userName;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
-        public String getChooseOption() {
-            return chooseoption;
+        public String getResponse() {
+            return response;
         }
 
-        public void setChooseOption(String chooseoption) {
-            this.chooseoption = chooseoption;
+        public void setResponse(String response) {
+            this.response = response;
         }
 
     }
@@ -114,54 +115,53 @@ public class PollController {
         model.addAttribute("pollDatabase", pollService.getPolls());
         return "poll";
     }
+    
+    @RequestMapping(value = "poll/list/chinese", method = RequestMethod.GET)
+    public String chinesePollList(HttpSession session) {
+        session.setAttribute("lang", "chinese");
+        return "redirect:/lecture/poll/list";
+    }
+    @RequestMapping(value = "poll/list/english", method = RequestMethod.GET)
+    public String englishPollList(HttpSession session) {
+        session.setAttribute("lang", "english");
+        return "redirect:/lecture/poll/list";
+    } 
 
     @RequestMapping(value = "poll/list/addPoll", method = RequestMethod.GET)
     public ModelAndView createForm() {
         return new ModelAndView("addPoll", "pollForm", new addPollForm());
     }
+    
+    
+    @RequestMapping(value = "poll/addPollChinese", method = RequestMethod.GET)
+    public String chinesePoll(HttpSession session) {
+        session.setAttribute("lang", "chinese");
+        return "redirect:/lecture/poll/list/addPoll";
+    }
+    @RequestMapping(value = "poll/addPollEnglish", method = RequestMethod.GET)
+    public String englishPoll(HttpSession session) {
+        session.setAttribute("lang", "english");
+        return "redirect:/lecture/poll/list/addPoll";
+    } 
 
     @RequestMapping(value = "poll/list/addPoll", method = RequestMethod.POST)
     public String addPollFrom(addPollForm form,
             ModelMap model, HttpServletRequest request) throws Exception {
-        pollService.createPoll(form.getQuestion(), form.getChooseOption1(), form.getChooseOption2(), form.getChooseOption3(), form.getChooseOption4());
-        return "redirect:/lecture/list";
+        pollService.createPoll(form.getQuestion(), form.getResponse1(), form.getResponse2(), form.getResponse3(), form.getResponse4());
+        return "redirect:/lecture/poll/list";
     }
 
     @RequestMapping(value = "/poll/{poll_id}", method = RequestMethod.GET)
-    public ModelAndView createAnsForm(@PathVariable("poll_id") long poll_id, ModelMap model, HttpServletRequest request) {
-        long[] pollCount = new long[]{pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption1()),
-        pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption2()),
-        pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption3()),
-        pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption4())};
-        
-        String[] pollOptions = new String[]{pollService.getPoll(poll_id).getChooseOption1(),
-            pollService.getPoll(poll_id).getChooseOption2(),
-            pollService.getPoll(poll_id).getChooseOption3(),
-            pollService.getPoll(poll_id).getChooseOption4()}; 
+    public ModelAndView createAnsForm(@PathVariable("poll_id") long poll_id, ModelMap model) {
         model.addAttribute("pollDatabase", pollService.getPoll(poll_id));
-        model.addAttribute("pollAllCount", pollService.countAllByPollId(poll_id));
-        model.addAttribute("pollCount", pollCount);
-        model.addAttribute("pollOptions", pollOptions);
-        
-//        model.addAttribute("pollCount1", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption1()));
-//        model.addAttribute("pollCount2", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption2()));
-//        model.addAttribute("pollCount3", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption3()));
-//        model.addAttribute("pollCount4", pollService.countAllByPollIdAndChooseOption(poll_id, pollService.getPoll(poll_id).getChooseOption4()));
-        model.addAttribute("userVoted", pollService.findChooseOptionByPollIdAndUsername(poll_id, request.getUserPrincipal().getName()));
         return new ModelAndView("viewPoll", "ansPollForm", new ansPollForm());
     }
 
     @RequestMapping(value = "/poll/{poll_id}", method = RequestMethod.POST)
-    public String ansPoll(@PathVariable("poll_id") long poll_id, ansPollForm form,
+    public String ansPoll(@PathVariable("poll_id") long poll_id,ansPollForm form,
             ModelMap model, HttpServletRequest request) throws Exception {
-        pollService.ansPoll(poll_id, request.getUserPrincipal().getName(), form.getChooseOption());
-        return "redirect:/lecture/poll/{poll_id}";
-    }
-
-    @RequestMapping(value = "/poll/delete/{poll_id}", method = RequestMethod.GET)
-    public String delPoll(@PathVariable("poll_id") long poll_id) throws Exception {
-        pollService.delPoll(poll_id);
-        return "redirect:/lecture/list";
+        pollService.ansPoll(poll_id,request.getUserPrincipal().getName(),form.getResponse());
+        return "redirect:/lecture/poll/list";
     }
 
 }

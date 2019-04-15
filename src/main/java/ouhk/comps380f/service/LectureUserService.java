@@ -21,11 +21,11 @@ public class LectureUserService implements UserDetailsService {
     LectureUserRepository lectureUserRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String userName)
+    public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        LectureUser lectureUser = lectureUserRepo.findOne(userName);
+        LectureUser lectureUser = lectureUserRepo.findOne(username);
         if (lectureUser == null) {
-            throw new UsernameNotFoundException("User '" + userName + "' not found.");
+            throw new UsernameNotFoundException("User '" + username + "' not found.");
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (UserRole role : lectureUser.getRoles()) {

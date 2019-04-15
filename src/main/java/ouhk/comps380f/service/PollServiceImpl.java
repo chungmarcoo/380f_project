@@ -5,10 +5,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ouhk.comps380f.dao.PollRepository;
-import ouhk.comps380f.dao.PollChooseOptionRepository;
+import ouhk.comps380f.dao.PollResponseRepository;
 import ouhk.comps380f.model.Poll;
-import ouhk.comps380f.model.PollChooseOption;
-import ouhk.comps380f.exception.PollChooseOptionNotFound;
+import ouhk.comps380f.model.PollResponse;
+import ouhk.comps380f.exception.PollResponseNotFound;
 
 @Service
 public class PollServiceImpl implements PollService {
@@ -17,7 +17,7 @@ public class PollServiceImpl implements PollService {
     private PollRepository pollRepo;
 
     @Resource
-    private PollChooseOptionRepository pollChooseOptionRepo;
+    private PollResponseRepository pollResponseRepo;
 
     @Override
     @Transactional
@@ -31,35 +31,26 @@ public class PollServiceImpl implements PollService {
         return pollRepo.findOne(poll_id);
     }
 
+    /*@Override
+    @Transactional(rollbackFor = CommentNotFound.class)
+    public void delComment(long id) throws CommentNotFound {
+        Comment deletedComment = commentRepo.findOne(id);
+        if (deletedComment == null) {
+            throw new CommentNotFound();
+        }
+        commentRepo.delete(deletedComment);
+    }*/
     @Override
     @Transactional
-    public long countAllByPollId(long poll_id) {
-        return pollChooseOptionRepo.countAllByPollId(poll_id);
-    }
-
-    @Override
-    @Transactional
-    public long countAllByPollIdAndChooseOption(long poll_id, String chooseoption) {
-        return pollChooseOptionRepo.countAllByPollIdAndChooseOption(poll_id, chooseoption);
-    }
-
-    @Override
-    @Transactional
-    public String findChooseOptionByPollIdAndUsername(long poll_id, String userName) {
-        return pollChooseOptionRepo.findChooseOptionByPollIdAndUsername(poll_id, userName);
-    }
-
-    @Override
-    @Transactional
-    public long createPoll(String question, String chooseoption1, String chooseoption2,
-            String chooseoption3, String chooseoption4) throws Exception {
+    public long createPoll(String question, String response1, String response2,
+            String response3, String response4) throws Exception {
         Poll poll = new Poll();
 
         poll.setQuestion(question);
-        poll.setChooseOption1(chooseoption1);
-        poll.setChooseOption2(chooseoption2);
-        poll.setChooseOption3(chooseoption3);
-        poll.setChooseOption4(chooseoption4);
+        poll.setResponse1(response1);
+        poll.setResponse2(response2);
+        poll.setResponse3(response3);
+        poll.setResponse4(response4);
 
         Poll savedPoll = pollRepo.save(poll);
         return savedPoll.getPoll_id();
@@ -67,43 +58,31 @@ public class PollServiceImpl implements PollService {
 
     @Override
     @Transactional
-    public void ansPoll(long poll_id, String userName, String chooseoption) throws Exception, PollChooseOptionNotFound {
-        PollChooseOption pollChooseOption = new PollChooseOption();
+    public void ansPoll(long poll_id, String username, String response) throws Exception, PollResponseNotFound {
+        PollResponse pollResponse = new PollResponse();
 
-        pollChooseOption.setPoll_id(poll_id);
-        pollChooseOption.setUsername(userName);
-        pollChooseOption.setChooseOption(chooseoption);
-        //delPollAns(poll_id,userName);
-        PollChooseOption deletedPollAns = pollChooseOptionRepo.findByPollIdAndUsername(poll_id, userName);
+        pollResponse.setPoll_id(poll_id);
+        pollResponse.setUsername(username);
+        pollResponse.setResponse(response);
+        //delPollAns(poll_id,username);
+        PollResponse deletedPollAns = pollResponseRepo.findByPollIdAndUsername(poll_id, username);
         if (deletedPollAns == null) {
-            PollChooseOption savedPollChooseOption = pollChooseOptionRepo.save(pollChooseOption);
-        } else {
-            pollChooseOptionRepo.delete(deletedPollAns);
-            PollChooseOption savedPollChooseOption = pollChooseOptionRepo.save(pollChooseOption);
-        }
+            PollResponse savedPollResponse = pollResponseRepo.save(pollResponse);
+        }else{
+        pollResponseRepo.delete(deletedPollAns);
+        PollResponse savedPollResponse = pollResponseRepo.save(pollResponse);}
 
+        
     }
 
     @Override
-    @Transactional(rollbackFor = PollChooseOptionNotFound.class)
-    public void delPollAns(long poll_id, String userName) throws Exception {
-        PollChooseOption deletedPollAns = pollChooseOptionRepo.findByPollIdAndUsername(poll_id, userName);
+    @Transactional(rollbackFor = PollResponseNotFound.class)
+    public void delPollAns(long poll_id, String username) throws Exception {
+        PollResponse deletedPollAns = pollResponseRepo.findByPollIdAndUsername(poll_id, username);
         if (deletedPollAns == null) {
             throw new Exception();
         }
-        pollChooseOptionRepo.delete(deletedPollAns);
-    }
-
-    @Override
-    @Transactional(rollbackFor = PollChooseOptionNotFound.class)
-    public void delPoll(long poll_id) throws Exception {
-        Poll deletedPoll = pollRepo.findPollByPollId(poll_id);
-        List<PollChooseOption> deletedPollAns = pollChooseOptionRepo.findAnsPollByPollId(poll_id);
-        if (deletedPollAns == null) {
-            throw new Exception();
-        }
-        pollChooseOptionRepo.delete(deletedPollAns);
-        pollRepo.delete(deletedPoll);
+        pollResponseRepo.delete(deletedPollAns);
     }
 
     /*(@Override

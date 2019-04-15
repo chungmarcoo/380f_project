@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ouhk.comps380f.exception.AttachmentNotFound;
 import ouhk.comps380f.exception.LectureNotFound;
 import ouhk.comps380f.model.Lecture;
-import ouhk.comps380f.model.Poll;
 
 public interface LectureService {
 
@@ -14,9 +13,7 @@ public interface LectureService {
             String body, List<MultipartFile> attachments) throws IOException;
 
     public List<Lecture> getLectures();
-    
-    public List<Poll> getPolls();
-    
+
     public Lecture getLecture(long id);
 
     public void updateLecture(long id, String subject,

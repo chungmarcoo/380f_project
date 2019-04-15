@@ -1,6 +1,7 @@
 package ouhk.comps380f.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,7 +33,7 @@ public class CommentController {
     public static class cmForm {
 
         private long id;
-        private String userName;
+        private String username;
         private String comment;
         private long lecture_id;
 
@@ -45,11 +46,11 @@ public class CommentController {
         }
 
         public String getUsername() {
-            return userName;
+            return username;
         }
 
-        public void setUsername(String userName) {
-            this.userName = userName;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public String getComment() {
@@ -70,6 +71,20 @@ public class CommentController {
 
     }
 
+    @RequestMapping(value = "view/langage/chinese", method = RequestMethod.GET)
+    public String chinese(HttpSession session) {
+        session.setAttribute("lang", "chinese");
+        long lectureId = (long) session.getAttribute("lectureId");
+        return "redirect:/lecture/view/" + lectureId;
+    }
+    @RequestMapping(value = "view/langage/english", method = RequestMethod.GET)
+    public String english(HttpSession session) {
+        session.setAttribute("lang", "english");
+        long lectureId = (long) session.getAttribute("lectureId");
+        return "redirect:/lecture/view/" + lectureId;
+    } 
+    
+    
     @RequestMapping(value = "/{lectureId}/comment", method = RequestMethod.GET)
     public ModelAndView createForm(@PathVariable("lectureId") long lectureId, ModelMap model) {
         Lecture lecture = lectureService.getLecture(lectureId);
